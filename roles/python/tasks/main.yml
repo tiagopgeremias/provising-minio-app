@@ -1,0 +1,38 @@
+- name: Update System
+  apt:
+    upgrade: dist
+    update_cache: no
+
+- name: Install Python 3
+  apt:
+    pkg:
+      - python3
+      - python3-pip
+      - git
+    state: present
+
+- name: Install Pipenv
+  pip:
+    name: pipenv
+
+- name: Directory Application
+  file:
+    path: "{{ app_directory }}"
+    state: directory
+    owner: ubuntu
+    group: ubuntu
+    mode: 0755
+
+- name: Clone App
+  git:
+    repo: https://github.com/tiagopgeremias/minio-upload.git
+    dest: "{{ app_directory }}"
+
+- name: Setup App
+  shell: "cd {{ app_directory }} && pipenv --python 3 install --system --deploy"
+
+- name: Kill Gunicorn
+  shell: if [ -f /var/run/gunicorn.pid ]; then kill -9 $(cat /var/run/gunicorn.pid); fi
+
+- name: Start App
+  shell: "gunicorn --chdir {{app_directory}} --pid=/var/run/gunicorn.pid --bind {{inventory_hostname}}:5000 wsgi:app &"

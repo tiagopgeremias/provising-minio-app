@@ -1,0 +1,17 @@
+[application-server:vars]
+ansible_user=ubuntu
+ansible_become=yes
+ansible_become_method=sudo
+ansible_python_interpreter=/usr/bin/python3
+
+#   Min.io variables
+minio_server_path=/opt/minio-server
+minio_cli_path=/opt/minio-cli
+minio_data_directory=/mnt/data
+
+#   Python application variables
+app_directory=/opt/app-upload
+
+[application-server]
+192.168.0.109
+#3.12.250.6
