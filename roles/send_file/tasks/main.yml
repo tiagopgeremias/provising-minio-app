@@ -1,0 +1,6 @@
+- name: Create file
+  shell: echo "Este é um arquivo de teste enviado pela aplicação minio-upload (https://github.com/tiagopgeremias/minio-upload) atraves do metodo curl" > /tmp/teste_envio.txt
+
+
+- name: Send File
+  shell: curl -X POST -F "file=@/tmp/teste_envio.txt" http://3.12.250.6:5000/minio-upload/files/teste_envio2.txt

@@ -37,9 +37,3 @@
   shell: "{{ minio_server_path }}/minio server /mnt/data >/dev/null 2>&1 &"
   async: 10
   poll: 0
-  # environment:
-  #   MINIO_ACCESS_KEY: "{{ minio_access }}"
-  #   MINIO_SECRET_KEY: "{{ minio_secret }}"
-  #   S3_URL: "http://{{ inventory_hostname }}:9000"
-  #   S3_ACCESS_KEY: "{{ minio_access }}"
-  #   S3_SECRET_KEY: "{{ minio_secret }}"

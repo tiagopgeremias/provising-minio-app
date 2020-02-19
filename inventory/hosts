@@ -10,8 +10,7 @@ minio_cli_path=/opt/minio-cli
 minio_data_directory=/mnt/data
 
 #   Python application variables
-app_directory=/opt/app-upload
+app_directory=/opt/minio-upload
 
 [application-server]
-192.168.0.109
-#3.12.250.6
+3.12.250.6

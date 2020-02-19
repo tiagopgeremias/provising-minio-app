@@ -27,12 +27,18 @@
   git:
     repo: https://github.com/tiagopgeremias/minio-upload.git
     dest: "{{ app_directory }}"
+    force: yes
 
 - name: Setup App
   shell: "cd {{ app_directory }} && pipenv --python 3 install --system --deploy"
 
-- name: Kill Gunicorn
-  shell: if [ -f /var/run/gunicorn.pid ]; then kill -9 $(cat /var/run/gunicorn.pid); fi
+- name: Create .env
+  template:
+    src: env.j2
+    dest: "{{app_directory}}/.env"
+    owner: ubuntu
+    group: ubuntu
+    mode: '0644'
 
 - name: Start App
-  shell: "gunicorn --chdir {{app_directory}} --pid=/var/run/gunicorn.pid --bind {{inventory_hostname}}:5000 wsgi:app &"
+  shell: "gunicorn --chdir {{app_directory}} --bind 0.0.0.0:5000 wsgi:app --daemon"
